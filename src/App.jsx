@@ -80,10 +80,13 @@ function ChatRoom() {
         <>
             <main>
                 {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-                <div ref={dummy}></div>
+                <span ref={dummy}></span>
             </main>
 
-            <form onSubmit={e => e.preventDefault()}>
+            <form onSubmit={e => {
+                e.preventDefault()
+                sendMessage().catch(err => console.log(err))
+            }}>
                 <input type="text" placeholder="say wch fi 9albek" value={formValue} onChange={e => setFormValue(e.target.value)}/>
                 <button type="button" disabled={!formValue} onClick={sendMessage}>🦦</button>
             </form>
