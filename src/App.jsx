@@ -23,7 +23,6 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-const analytics = firebase.analytics();
 
 function App() {
     const [user] = useAuthState(auth);
@@ -84,7 +83,7 @@ function ChatRoom() {
                 <div ref={dummy}></div>
             </main>
 
-            <form>
+            <form onSubmit={e => e.preventDefault()}>
                 <input type="text" placeholder="say wch fi 9albek" value={formValue} onChange={e => setFormValue(e.target.value)}/>
                 <button type="button" disabled={!formValue} onClick={sendMessage}>🦦</button>
             </form>
