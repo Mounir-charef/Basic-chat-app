@@ -7,7 +7,7 @@ import './app.css';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBgqtQqKZENBq5lfPgC8pGG4_PuvI-9sX0",
@@ -60,6 +60,7 @@ function SignOut() {
 function ChatRoom() {
     const messagesRef = firestore.collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
+    const dummy = useRef()
 
     const [messages] = useCollectionData(query, { idField: 'id' });
     const [formValue, setFormValue] = useState('');
@@ -72,13 +73,15 @@ function ChatRoom() {
             photoURL
         });
         setFormValue('');
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     return (
         <>
-            <div>
+            <main>
                 {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-            </div>
+                <div ref={dummy}></div>
+            </main>
 
             <form>
                 <input type="text" placeholder="say wch fi 9albek" value={formValue} onChange={e => setFormValue(e.target.value)}/>
